@@ -14,7 +14,7 @@ object InnerJoinApp {
 
     val spark = SparkSession
       .builder()
-      .appName("Stream_Stream_Joins_Using_Structured_Streaming")
+      .appName("InnerJoinApp")
       .config("spark.sql.shuffle.partitions", "1")
       .getOrCreate()
 
@@ -42,29 +42,30 @@ object InnerJoinApp {
 //    Inner Join
     val events = impressions.join(clicks, "adId")
 
-    val mode = "ProcessingTime"
-
     import scala.concurrent.duration._
+    import AppConfig._
+
+    val mode = TRIGGER_POLICY.PROCESSING_TIME
 
     val query = mode match {
-      case "DefaultTrigger" =>
+      case TRIGGER_POLICY.DEFAULT =>
         // Default trigger (runs micro-batch as soon as it can)
         events.writeStream
           .format("console")
           .start()
-      case "ProcessingTime" =>
+      case TRIGGER_POLICY.PROCESSING_TIME =>
         // ProcessingTime trigger with two-seconds micro-batch interval
         events.writeStream
           .format("console")
           .trigger(Trigger.ProcessingTime(2.seconds))
           .start()
-      case "OneTimeTrigger" =>
+      case TRIGGER_POLICY.ONCE =>
         // One-time trigger
         events.writeStream
           .format("console")
           .trigger(Trigger.Once())
           .start()
-      case "ContinuousTrigger" =>
+      case TRIGGER_POLICY.CONTINUOUS =>
         // Continuous trigger with one-second checkpointing interval
         events.writeStream
           .format("console")
@@ -72,17 +73,8 @@ object InnerJoinApp {
           .start()
       case _ => sys.exit(1)
     }
-      //      .format("memory")
-      //      .queryName("sessions")
-      //      .format("parquet")
-      //      .option("path", params.outputPath)
-//      .outputMode(OutputMode.Update())
-//      .foreach(foreachWriter)
-
-//      .option("checkpointLocation", checkpointLocation)
 
     query.awaitTermination()
-
 
   }
 
