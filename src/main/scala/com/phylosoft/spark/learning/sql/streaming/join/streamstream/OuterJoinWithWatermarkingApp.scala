@@ -1,5 +1,6 @@
 package com.phylosoft.spark.learning.sql.streaming.join.streamstream
 
+import com.phylosoft.spark.learning.sql.streaming.join.Processor
 import org.apache.spark.sql.DataFrame
 
 object OuterJoinWithWatermarkingApp {

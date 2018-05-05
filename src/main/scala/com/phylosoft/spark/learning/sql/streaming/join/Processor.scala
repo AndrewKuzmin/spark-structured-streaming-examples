@@ -1,4 +1,4 @@
-package com.phylosoft.spark.learning.sql.streaming.join.streamstream
+package com.phylosoft.spark.learning.sql.streaming.join
 
 import org.apache.spark.sql.functions.rand
 import org.apache.spark.sql.streaming.Trigger
@@ -6,7 +6,7 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 abstract class Processor(appName: String) {
 
-  private[streamstream] val spark = SparkSession
+  private[join] val spark = SparkSession
     .builder()
     .appName(appName)
     //      sparkConf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
