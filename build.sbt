@@ -10,6 +10,7 @@ val log4jVersion = "1.2.17"
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % sparkVersion,
   "org.apache.spark" %% "spark-sql" % sparkVersion,
+  "org.apache.spark" %% "spark-mllib" % sparkVersion,
 
   "org.scalatest" %% "scalatest" % "3.0.5",
 
