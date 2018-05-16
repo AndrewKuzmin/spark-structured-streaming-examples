@@ -2,7 +2,14 @@ package com.phylosoft.spark.learning.ml.streaming
 
 import org.apache.log4j.{Level, LogManager}
 import org.apache.spark.SparkConf
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.ml.classification.GBTClassifier
+import org.apache.spark.ml.feature.{OneHotEncoderEstimator, VectorAssembler, VectorSizeHint}
+import org.apache.spark.ml.linalg.SQLDataTypes.VectorType
+import org.apache.spark.ml.{Pipeline, PipelineModel}
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types.{IntegerType, StructField, StructType}
+import org.apache.spark.sql.{Dataset, Row, SparkSession}
+
 
 /**
   * Databricks's "MLlib Pipelines and Structured Streaming" notebook
@@ -37,93 +44,83 @@ object CreditCardFraudApp {
     app.start()
   }
 
-  class CreditCardFraudApp(spark: SparkSession) {
+}
 
-    import org.apache.spark.ml.classification.GBTClassifier
-    import org.apache.spark.ml.feature.{OneHotEncoderEstimator, VectorAssembler, VectorSizeHint}
-    import org.apache.spark.ml.linalg.SQLDataTypes.VectorType
-    import org.apache.spark.ml.{Pipeline, PipelineModel}
-    import org.apache.spark.sql.functions._
-    import org.apache.spark.sql.types.{IntegerType, StructField, StructType}
-    import org.apache.spark.sql.{Dataset, Row}
+class CreditCardFraudApp(private val spark: SparkSession) {
 
+  import spark.implicits._
 
-    def start(): Unit = {
+  def start(): Unit = {
 
-      val data = spark.read.parquet("data/credit-card-fraud/data")
-      data.printSchema()
+    val data = spark.read.parquet("data/credit-card-fraud/data")
+    data.printSchema()
 
-      val Array(train, test) = data.randomSplit(weights = Array(.8, .2))
+    val Array(train, test) = data.randomSplit(weights = Array(.8, .2))
 
-      val pipelineModel = getPipelineModel(train)
+    val pipelineModel = getPipelineModel(train)
 
-      test.repartition(20).write
-        .mode("overwrite")
-        .parquet(testDataPath)
+    test.repartition(20).write
+      .mode("overwrite")
+      .parquet(testDataPath)
 
-      val schema = new StructType()
-        .add(StructField("time", IntegerType))
-        .add(StructField("amountRange", IntegerType))
-        .add(StructField("label", IntegerType))
-        .add(StructField("pcaVector", VectorType))
+    val schema = new StructType()
+      .add(StructField("time", IntegerType))
+      .add(StructField("amountRange", IntegerType))
+      .add(StructField("label", IntegerType))
+      .add(StructField("pcaVector", VectorType))
 
-      val streamingData = spark.readStream
-        .schema(schema)
-        .option("maxFilesPerTrigger", 1)
-        .parquet(testDataPath)
+    val streamingData = spark.readStream
+      .schema(schema)
+      .option("maxFilesPerTrigger", 1)
+      .parquet(testDataPath)
 
-      import spark.implicits._
+    val streamingRates = pipelineModel
+      .transform(streamingData)
+      .groupBy('label)
+      .agg(
+        (sum(when('prediction === 'label, 1)) / count('label)).alias("true prediction rate"),
+        count('label).alias("count")
+      )
 
-      val streamingRates = pipelineModel
-        .transform(streamingData)
-        .groupBy('label)
-        .agg(
-          (sum(when('prediction === 'label, 1)) / count('label)).alias("true prediction rate"),
-          count('label).alias("count")
-        )
+    val query = streamingRates.writeStream
+      .format("console")
+      .outputMode("complete")
+      //          .trigger(Trigger.Once())
+      .start()
 
-      val query = streamingRates.writeStream
-        .format("console")
-        .outputMode("complete")
-        //          .trigger(Trigger.Once())
-        .start()
+    query.awaitTermination()
 
-      query.awaitTermination()
+  }
 
+  private def getPipelineModel(train: Dataset[Row]): PipelineModel = {
 
-    }
+    val oneHot = new OneHotEncoderEstimator()
+      .setInputCols(Array("amountRange"))
+      .setOutputCols(Array("amountVect"))
 
-    private def getPipelineModel(train: Dataset[Row]): PipelineModel = {
+    val vectorAssembler = new VectorAssembler()
+      .setInputCols(Array("amountVect", "pcaVector"))
+      .setOutputCol("features")
 
-      val oneHot = new OneHotEncoderEstimator()
-        .setInputCols(Array("amountRange"))
-        .setOutputCols(Array("amountVect"))
+    val estimator = new GBTClassifier()
+      .setLabelCol("label")
+      .setFeaturesCol("features")
 
-      val vectorAssembler = new VectorAssembler()
-        .setInputCols(Array("amountVect", "pcaVector"))
-        .setOutputCol("features")
+    val vectorSizeHint = new VectorSizeHint()
+      .setInputCol("pcaVector")
+      .setSize(28)
 
-      val estimator = new GBTClassifier()
-        .setLabelCol("label")
-        .setFeaturesCol("features")
+    val pipeline = new Pipeline()
+      .setStages(Array(oneHot, vectorSizeHint, vectorAssembler, estimator))
 
-      val vectorSizeHint = new VectorSizeHint()
-        .setInputCol("pcaVector")
-        .setSize(28)
+    pipeline.fit(train)
 
-      val pipeline = new Pipeline()
-        .setStages(Array(oneHot, vectorSizeHint, vectorAssembler, estimator))
+  }
 
-      pipeline.fit(train)
-
-    }
-
-    private def testDataPath: String = {
-      import java.io.File
-      val testDataPath = "file:///" + new File("credit-card-frauld-test-data").getAbsolutePath.toString
-      testDataPath
-    }
-
+  private def testDataPath: String = {
+    import java.io.File
+    val testDataPath = "file:///" + new File("credit-card-frauld-test-data").getAbsolutePath.toString
+    testDataPath
   }
 
 }
