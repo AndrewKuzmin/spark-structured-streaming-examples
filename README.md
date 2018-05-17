@@ -16,6 +16,8 @@ Spark structured streaming examples with using of version 2.3.0
 1) KeyValueGroupedDataset.mapGroupsWithState;
 2) KeyValueGroupedDataset.flatMapGroupsWithState;
 
+# MLlib Pipelines and Structured Streaming
+
 # Links
 1) [Stream-Stream Joins using Structured Streaming (Scala)](https://docs.databricks.com/spark/latest/structured-streaming/examples.html#stream-stream-joins-scala);
-
+2) [MLlib Pipelines and Structured Streaming](https://docs.databricks.com/spark/latest/mllib/mllib-pipelines-and-stuctured-streaming.html);
