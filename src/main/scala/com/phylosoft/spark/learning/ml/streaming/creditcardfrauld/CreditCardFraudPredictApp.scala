@@ -1,15 +1,11 @@
 package com.phylosoft.spark.learning.ml.streaming.creditcardfrauld
 
-import com.phylosoft.spark.learning.SparkSessionConfiguration
 import com.phylosoft.spark.learning.ml.streaming.creditcardfrauld.services.CreditCardFraudService
-import org.apache.log4j.{Level, LogManager}
+import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 
 object CreditCardFraudPredictApp
   extends App
-    with SparkSessionConfiguration {
-
-  val log = LogManager.getRootLogger
-  log.setLevel(Level.WARN)
+    with SparkSessionConfiguration with Logger {
 
   val settings = Map("spark.app.name" -> "CreditCardFraudPredictApp")
   val spark = getSparkSession(settings)

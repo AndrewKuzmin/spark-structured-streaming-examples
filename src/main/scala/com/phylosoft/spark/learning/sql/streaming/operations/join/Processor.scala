@@ -1,13 +1,13 @@
 package com.phylosoft.spark.learning.sql.streaming.operations.join
 
-import com.phylosoft.spark.learning.SparkSessionConfiguration
+import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 import com.phylosoft.spark.learning.sql.streaming.sink.ConsoleSink
 import com.phylosoft.spark.learning.sql.streaming.source.RateSource
 import org.apache.spark.sql.DataFrame
 
 abstract class Processor(appName: String)
   extends SparkSessionConfiguration
-    with RateSource with ConsoleSink {
+    with RateSource with ConsoleSink with Logger {
 
   private val settings = Map("spark.app.name" -> appName)
 
