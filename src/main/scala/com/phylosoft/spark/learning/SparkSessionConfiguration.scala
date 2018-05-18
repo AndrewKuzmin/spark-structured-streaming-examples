@@ -5,6 +5,8 @@ import org.apache.spark.sql.SparkSession
 
 trait SparkSessionConfiguration {
 
+  val spark: SparkSession
+
   def getSparkSession(settings: Traversable[(String, String)]): SparkSession = {
 
     val conf = new SparkConf()

@@ -1,16 +1,13 @@
-package com.phylosoft.spark.learning.sql.streaming.join.streamstream
+package com.phylosoft.spark.learning.sql.streaming.operations.join.streamstream
 
-import com.phylosoft.spark.learning.sql.streaming.join.Processor
+import com.phylosoft.spark.learning.sql.streaming.operations.join.Processor
 import org.apache.spark.sql.DataFrame
 
-/**
-  * Inner Join with Watermarking
-  */
-object InnerJoinWithWatermarkingApp {
+object OuterJoinWithWatermarkingApp {
 
   def main(args: Array[String]): Unit = {
 
-    val processor = new Processor("InnerJoinWithWatermarkingApp") {
+    val processor = new Processor("OuterJoinWithWatermarkingApp") {
 
       override def join(impressions: DataFrame, clicks: DataFrame): DataFrame = {
 
@@ -26,20 +23,23 @@ object InnerJoinWithWatermarkingApp {
           .select($"adId".as("clickAdId"), $"clickTime")
           .withWatermark("clickTime", "20 seconds") // max 2 minutes late
 
-        impressionsWithWatermark.join(clicksWithWatermark,
+        impressionsWithWatermark.join(
+          clicksWithWatermark,
           expr(
             """
       clickAdId = impressionAdId AND
       clickTime >= impressionTime AND
       clickTime <= impressionTime + interval 1 minutes
       """
-          )
+          ),
+          "leftOuter"
         )
 
       }
 
     }
     processor.start()
+
 
   }
 

@@ -1,13 +1,10 @@
-package com.phylosoft.spark.learning.sql.streaming.join.streamstream
+package com.phylosoft.spark.learning.sql.streaming.operations.join.streamstatic
 
-import com.phylosoft.spark.learning.sql.streaming.join.AppConfig.TRIGGER_POLICY
-import com.phylosoft.spark.learning.sql.streaming.join.AppConfig.TRIGGER_POLICY.TRIGGER_POLICY
-import com.phylosoft.spark.learning.sql.streaming.join.Processor
+import com.phylosoft.spark.learning.sql.streaming.operations.join.AppConfig.TRIGGER_POLICY
+import com.phylosoft.spark.learning.sql.streaming.operations.join.AppConfig.TRIGGER_POLICY.TRIGGER_POLICY
+import com.phylosoft.spark.learning.sql.streaming.operations.join.Processor
 import org.apache.spark.sql.DataFrame
 
-/**
-  *
-  */
 object InnerJoinApp {
 
   def main(args: Array[String]): Unit = {
@@ -25,5 +22,6 @@ object InnerJoinApp {
     processor.start()
 
   }
+
 
 }

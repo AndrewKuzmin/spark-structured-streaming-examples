@@ -1,4 +1,4 @@
-package com.phylosoft.spark.learning.sql.streaming.join
+package com.phylosoft.spark.learning.sql.streaming.operations.join
 
 object AppConfig {
 
