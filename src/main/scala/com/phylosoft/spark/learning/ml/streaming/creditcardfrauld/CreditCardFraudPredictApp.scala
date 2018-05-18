@@ -1,5 +1,6 @@
 package com.phylosoft.spark.learning.ml.streaming.creditcardfrauld
 
+import com.phylosoft.spark.learning.SparkSessionConfiguration
 import com.phylosoft.spark.learning.ml.streaming.creditcardfrauld.services.CreditCardFraudService
 import org.apache.log4j.{Level, LogManager}
 

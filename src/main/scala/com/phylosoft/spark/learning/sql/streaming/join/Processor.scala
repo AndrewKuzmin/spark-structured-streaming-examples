@@ -1,19 +1,15 @@
 package com.phylosoft.spark.learning.sql.streaming.join
 
+import com.phylosoft.spark.learning.SparkSessionConfiguration
+import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.rand
 import org.apache.spark.sql.streaming.Trigger
-import org.apache.spark.sql.{DataFrame, SparkSession}
 
-abstract class Processor(appName: String) {
+abstract class Processor(appName: String) extends SparkSessionConfiguration {
 
-  private[join] val spark = SparkSession
-    .builder()
-    .appName(appName)
-    //      sparkConf.set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-    //      sparkConf.set("spark.kryoserializer.buffer", "24")
-    .config("spark.sql.shuffle.partitions", "1")
-    .config("spark.sql.cbo.enabled", "true")
-    .getOrCreate()
+  private val settings = Map("spark.app.name" -> appName)
+
+  private[join] val spark = getSparkSession(settings)
 
   def start(): Unit = {
 

@@ -1,4 +1,4 @@
-package com.phylosoft.spark.learning.ml.streaming.creditcardfrauld
+package com.phylosoft.spark.learning
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
