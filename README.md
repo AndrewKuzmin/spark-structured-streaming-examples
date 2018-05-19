@@ -21,3 +21,7 @@ Spark structured streaming examples with using of version 2.3.0
 # Links
 1) [Stream-Stream Joins using Structured Streaming (Scala)](https://docs.databricks.com/spark/latest/structured-streaming/examples.html#stream-stream-joins-scala);
 2) [MLlib Pipelines and Structured Streaming](https://docs.databricks.com/spark/latest/mllib/mllib-pipelines-and-stuctured-streaming.html);
+3) [Easy, Scalable, Fault-Tolerant Stream Processing with Structured Streaming in Apache Spark](https://databricks.com/session/easy-scalable-fault-tolerant-stream-processing-with-structured-streaming-in-apache-spark);
+4) [Easy, Scalable, Fault-Tolerant Stream Processing with Structured Streaming in Apache Spark - continues](https://databricks.com/session/easy-scalable-fault-tolerant-stream-processing-with-structured-streaming-in-apache-spark-continues);
+5) [Deep Dive into Stateful Stream Processing in Structured Streaming](https://databricks.com/session/deep-dive-into-stateful-stream-processing-in-structured-streaming);
+6) [Monitoring Structured Streaming Applications Using Web UI](https://databricks.com/session/monitoring-structured-streaming-applications-using-web-ui);

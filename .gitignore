@@ -1,3 +1,14 @@
+# Applications
+credit-card-frauld-test-data/
+data/credit-card-fraud/data/
+data/credit-card-fraud/model/
+other/
+
+# Apache Spark
+checkpoint/
+metastore_db/
+spark-warehouse/
+
 # Compiled class file
 *.class
 

@@ -1,8 +1,10 @@
 package com.phylosoft.spark.learning.sql.streaming.sink
 
+import java.io.File
+
 import com.phylosoft.spark.learning.sql.streaming.operations.join.AppConfig._
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.streaming.{StreamingQuery, Trigger}
+import org.apache.spark.sql.streaming.{OutputMode, StreamingQuery, Trigger}
 
 trait ConsoleSink {
 
@@ -26,9 +28,13 @@ trait ConsoleSink {
       case _ => sys.exit(1)
     }
 
+    val checkpointLocation = "file:///" + new File("checkpoint").getAbsolutePath + "/console"
+
     events.writeStream
       .format("console")
       .trigger(trigger)
+      .outputMode(OutputMode.Update())
+      .option("checkpointLocation", checkpointLocation)
       .start()
   }
 
