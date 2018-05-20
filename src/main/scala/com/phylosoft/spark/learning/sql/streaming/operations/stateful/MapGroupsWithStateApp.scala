@@ -1,6 +1,7 @@
 package com.phylosoft.spark.learning.sql.streaming.operations.stateful
 
 import com.phylosoft.spark.learning.sql.streaming.domain.Model.{Event, SessionInfo, SessionUpdate}
+import com.phylosoft.spark.learning.sql.streaming.monitoring.Monitoring
 import com.phylosoft.spark.learning.sql.streaming.operations.join.AppConfig.TRIGGER_POLICY
 import com.phylosoft.spark.learning.sql.streaming.sink.ConsoleSink
 import com.phylosoft.spark.learning.sql.streaming.source.RateSource
@@ -13,9 +14,12 @@ object MapGroupsWithStateApp
     with RateSource
     with ConsoleSink
     with GroupsWithStateFunction
+    with Monitoring
     with Logger {
 
   val settings = Map("spark.app.name" -> "MapGroupsWithStateApp")
+
+  spark.streams.addListener(simpleListener)
 
   val userActions = loadUserActions()
   userActions.printSchema()
