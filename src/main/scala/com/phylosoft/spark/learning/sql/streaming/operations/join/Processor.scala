@@ -2,14 +2,13 @@ package com.phylosoft.spark.learning.sql.streaming.operations.join
 
 import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
 import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
-import com.phylosoft.spark.learning.sql.streaming.source.rate.RateSource
+import com.phylosoft.spark.learning.sql.streaming.source.rate.RateSources
 import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.streaming.{OutputMode, StreamingQuery, Trigger}
 
 abstract class Processor(appName: String)
   extends SparkSessionConfiguration
-    with RateSource
     with Logger {
 
   val settings = Map("spark.app.name" -> appName,
@@ -18,9 +17,11 @@ abstract class Processor(appName: String)
 
   def start(): Unit = {
 
-    val impressions = loadImpressions()
+    val sources = new RateSources(spark)
 
-    val clicks = loadClicks()
+    val impressions = sources.loadImpressions()
+
+    val clicks = sources.loadClicks()
 
     val events = join(impressions, clicks)
 
