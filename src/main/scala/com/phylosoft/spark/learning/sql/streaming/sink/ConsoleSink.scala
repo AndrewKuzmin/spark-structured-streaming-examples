@@ -8,7 +8,9 @@ import org.apache.spark.sql.streaming.{OutputMode, StreamingQuery, Trigger}
 
 trait ConsoleSink {
 
-  def getQuery(events: DataFrame, triggerPolicy: TRIGGER_POLICY.TRIGGER_POLICY): StreamingQuery = {
+  def getQuery(events: DataFrame,
+               triggerPolicy: TRIGGER_POLICY.TRIGGER_POLICY,
+               outputMode: OutputMode = OutputMode.Update()): StreamingQuery = {
 
     import scala.concurrent.duration._
 
@@ -33,7 +35,7 @@ trait ConsoleSink {
     events.writeStream
       .format("console")
       .trigger(trigger)
-      .outputMode(OutputMode.Update())
+      .outputMode(outputMode)
       .option("checkpointLocation", checkpointLocation)
       .start()
   }

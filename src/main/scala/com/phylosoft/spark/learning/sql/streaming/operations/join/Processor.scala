@@ -1,17 +1,20 @@
 package com.phylosoft.spark.learning.sql.streaming.operations.join
 
-import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 import com.phylosoft.spark.learning.sql.streaming.sink.ConsoleSink
 import com.phylosoft.spark.learning.sql.streaming.source.RateSource
+import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.streaming.OutputMode
 
 abstract class Processor(appName: String)
   extends SparkSessionConfiguration
-    with RateSource with ConsoleSink with Logger {
+    with RateSource
+    with ConsoleSink
+    with Logger {
 
-  private val settings = Map("spark.app.name" -> appName)
-
-  val spark = getSparkSession(settings)
+  val settings = Map("spark.app.name" -> appName,
+    "spark.sql.shuffle.partitions" -> "1"
+  )
 
   def start(): Unit = {
 
@@ -21,7 +24,7 @@ abstract class Processor(appName: String)
 
     val events = join(impressions, clicks)
 
-    val query = getQuery(events, getTriggerPolicy)
+    val query = getQuery(events, getTriggerPolicy, OutputMode.Append())
     query.awaitTermination()
 
   }

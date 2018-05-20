@@ -16,7 +16,6 @@ object MapGroupsWithStateApp
     with Logger {
 
   val settings = Map("spark.app.name" -> "MapGroupsWithStateApp")
-  val spark = getSparkSession(settings)
 
   val userActions = loadUserActions()
   userActions.printSchema()

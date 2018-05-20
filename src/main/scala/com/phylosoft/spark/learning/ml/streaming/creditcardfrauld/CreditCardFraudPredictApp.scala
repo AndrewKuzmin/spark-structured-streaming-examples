@@ -5,10 +5,10 @@ import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 
 object CreditCardFraudPredictApp
   extends App
-    with SparkSessionConfiguration with Logger {
+    with SparkSessionConfiguration
+    with Logger {
 
   val settings = Map("spark.app.name" -> "CreditCardFraudPredictApp")
-  val spark = getSparkSession(settings)
 
   val service = new CreditCardFraudService(spark)
   service.predict()
