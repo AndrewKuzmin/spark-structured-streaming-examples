@@ -35,7 +35,7 @@ abstract class Processor(appName: String)
     sink.start(data = data, trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
   }
 
-  import AppConfig._
+  import com.phylosoft.spark.learning.AppConfig._
 
   def getTriggerPolicy: TRIGGER_POLICY.TRIGGER_POLICY = TRIGGER_POLICY.PROCESSING_TIME
 

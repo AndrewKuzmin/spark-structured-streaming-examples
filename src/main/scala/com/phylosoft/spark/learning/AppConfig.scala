@@ -1,5 +1,8 @@
-package com.phylosoft.spark.learning.sql.streaming.operations.join
+package com.phylosoft.spark.learning
 
+/**
+  * Created by Andrew on 5/20/2018.
+  */
 object AppConfig {
 
   object TRIGGER_POLICY extends Enumeration {

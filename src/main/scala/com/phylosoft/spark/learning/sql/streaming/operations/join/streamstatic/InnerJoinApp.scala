@@ -1,7 +1,7 @@
 package com.phylosoft.spark.learning.sql.streaming.operations.join.streamstatic
 
-import com.phylosoft.spark.learning.sql.streaming.operations.join.AppConfig.TRIGGER_POLICY
-import com.phylosoft.spark.learning.sql.streaming.operations.join.AppConfig.TRIGGER_POLICY.TRIGGER_POLICY
+import com.phylosoft.spark.learning.AppConfig.TRIGGER_POLICY
+import com.phylosoft.spark.learning.AppConfig.TRIGGER_POLICY.TRIGGER_POLICY
 import com.phylosoft.spark.learning.sql.streaming.operations.join.Processor
 import org.apache.spark.sql.DataFrame
 
