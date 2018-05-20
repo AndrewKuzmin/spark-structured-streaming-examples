@@ -8,7 +8,7 @@ import org.apache.spark.sql.{ForeachWriter, Row}
 /**
   * Created by Andrew on 5/20/2018.
   */
-class ForeachKafkaSink(kafkaProps: Properties) extends ForeachWriter[Row] {
+class ForeachKafkaWriter(kafkaProps: Properties) extends ForeachWriter[Row] {
 
   // KafkaProducer can't be serialized, so we're creating it locally for each partition.
   var producer: KafkaProducer[String, Row] = _
