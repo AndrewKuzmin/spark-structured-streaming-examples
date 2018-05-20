@@ -8,18 +8,28 @@ import org.apache.spark.sql.{ForeachWriter, Row}
 /**
   * Created by Andrew on 5/20/2018.
   */
-class ForeachKafkaWriter(kafkaProps: Properties) extends ForeachWriter[Row] {
+class ForeachKafkaWriter(topic: String,
+                         brokers: String,
+                         func: Row => (String, String)) extends ForeachWriter[Row] {
+
+  val kafkaProperties = new Properties()
+  kafkaProperties.put("bootstrap.servers", brokers)
+  kafkaProperties.put("key.serializer", "kafkashaded.org.apache.kafka.common.serialization.StringSerializer")
+  kafkaProperties.put("value.serializer", "kafkashaded.org.apache.kafka.common.serialization.StringSerializer")
+
+  val results = new scala.collection.mutable.HashMap[String, String]
 
   // KafkaProducer can't be serialized, so we're creating it locally for each partition.
-  var producer: KafkaProducer[String, Row] = _
+  var producer: KafkaProducer[String, String] = _
 
   override def open(partitionId: Long, version: Long): Boolean = {
-    producer = new KafkaProducer[String, Row](kafkaProps)
+    producer = new KafkaProducer[String, String](kafkaProperties)
     true
   }
 
-  override def process(value: Row): Unit = {
-    val message = new ProducerRecord[String, Row]("topic", value.getString(0), value)
+  override def process(row: Row): Unit = {
+    val (key, value) = func(row)
+    val message = new ProducerRecord[String, String](topic, key, value)
     println("sending windowed message: " + value)
     producer.send(message)
   }
