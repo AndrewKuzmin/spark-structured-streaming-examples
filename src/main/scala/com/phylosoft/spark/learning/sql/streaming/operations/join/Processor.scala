@@ -1,15 +1,15 @@
 package com.phylosoft.spark.learning.sql.streaming.operations.join
 
-import com.phylosoft.spark.learning.sql.streaming.sink.ConsoleSink
-import com.phylosoft.spark.learning.sql.streaming.source.RateSource
+import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
+import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
+import com.phylosoft.spark.learning.sql.streaming.source.rate.RateSource
 import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.streaming.OutputMode
+import org.apache.spark.sql.streaming.{OutputMode, StreamingQuery, Trigger}
 
 abstract class Processor(appName: String)
   extends SparkSessionConfiguration
     with RateSource
-    with ConsoleSink
     with Logger {
 
   val settings = Map("spark.app.name" -> appName,
@@ -24,9 +24,14 @@ abstract class Processor(appName: String)
 
     val events = join(impressions, clicks)
 
-    val query = getQuery(events, getTriggerPolicy, OutputMode.Append())
+    val query = startStreamingSink(events, new ConsoleSink())
     query.awaitTermination()
 
+  }
+
+  private def startStreamingSink[T <: StreamingSink](data: DataFrame, sink: T): StreamingQuery = {
+    import scala.concurrent.duration._
+    sink.start(data = data, trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
   }
 
   import AppConfig._

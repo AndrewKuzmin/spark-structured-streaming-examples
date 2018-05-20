@@ -2,17 +2,17 @@ package com.phylosoft.spark.learning.sql.streaming.operations.stateful
 
 import com.phylosoft.spark.learning.sql.streaming.domain.Model.{Event, SessionInfo, SessionUpdate}
 import com.phylosoft.spark.learning.sql.streaming.monitoring.Monitoring
-import com.phylosoft.spark.learning.sql.streaming.operations.join.AppConfig.TRIGGER_POLICY
-import com.phylosoft.spark.learning.sql.streaming.sink.ConsoleSink
-import com.phylosoft.spark.learning.sql.streaming.source.RateSource
+import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
+import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
+import com.phylosoft.spark.learning.sql.streaming.source.rate.RateSource
 import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
-import org.apache.spark.sql.streaming.GroupStateTimeout
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.streaming.{GroupStateTimeout, StreamingQuery, Trigger}
 
 object MapGroupsWithStateApp
   extends App
     with SparkSessionConfiguration
     with RateSource
-    with ConsoleSink
     with GroupsWithStateFunction
     with Monitoring
     with Logger {
@@ -56,7 +56,12 @@ object MapGroupsWithStateApp
   sessions.printSchema()
 
   // Start running the query that prints the session updates to the console
-  val query = getQuery(sessions, TRIGGER_POLICY.PROCESSING_TIME)
+  val query = startStreamingSink(sessions, new ConsoleSink())
   query.awaitTermination()
+
+  private def startStreamingSink[T <: StreamingSink](data: DataFrame, sink: T) : StreamingQuery = {
+    import scala.concurrent.duration._
+    sink.start(data = data, trigger = Trigger.ProcessingTime(2.seconds))
+  }
 
 }

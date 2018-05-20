@@ -1,4 +1,4 @@
-package com.phylosoft.spark.learning.sql.streaming.source
+package com.phylosoft.spark.learning.sql.streaming.source.rate
 
 import com.phylosoft.spark.learning.SparkSessionConfiguration
 import org.apache.spark.sql.DataFrame
