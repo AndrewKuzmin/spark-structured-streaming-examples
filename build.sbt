@@ -12,7 +12,6 @@ val sparkAndDependencies = Seq(
   "org.apache.spark" %% "spark-core" % sparkVersion,
   "org.apache.spark" %% "spark-sql" % sparkVersion,
   "org.apache.spark" %% "spark-hive" % sparkVersion,
-  "org.apache.spark" %% "spark-mllib" % sparkVersion,
   "org.apache.spark" %% "spark-sql-kafka-0-10" % sparkVersion
 )
 
@@ -22,7 +21,6 @@ libraryDependencies ++= sparkAndDependencies
 libraryDependencies ++= Seq(
   "com.datastax.spark" %% "spark-cassandra-connector" % sparkCassandraConnectorVersion,
   "org.postgresql" % "postgresql" % "42.1.1",
-  "com.github.fommil.netlib" % "all" % "1.1.2" pomOnly(),
   "org.scalatest" %% "scalatest" % "3.0.5",
   "com.typesafe" % "config" % "1.3.1",
   "com.github.scopt" %% "scopt" % "3.6.0"
