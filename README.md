@@ -1,5 +1,5 @@
 # Spark Structured Streaming Examples
-Spark structured streaming examples with using of version 2.3.0
+Spark structured streaming examples with using of version 2.4.0
 
 # Use cases of processing modes (Triggers modes)
 1) Default;
