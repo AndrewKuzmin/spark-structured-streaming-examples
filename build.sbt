@@ -22,6 +22,6 @@ libraryDependencies ++= Seq(
   "com.datastax.spark" % "spark-cassandra-connector_2.11" % sparkCassandraConnectorVersion,
   "org.postgresql" % "postgresql" % "42.1.1",
   "org.scalatest" %% "scalatest" % "3.0.5",
-  "com.typesafe" % "config" % "1.3.1",
-  "com.github.scopt" %% "scopt" % "3.6.0"
+  "com.typesafe" % "config" % "1.3.3",
+  "com.github.scopt" %% "scopt" % "3.7.1"
 )

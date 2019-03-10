@@ -34,3 +34,4 @@ hs_err_pid*
 
 # sbt
 !sbt-dist/bin/sbt-launch.jar
+target/
