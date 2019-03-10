@@ -1,4 +1,4 @@
-package com.phylosoft.spark.learning.sql.streaming.join.streamstream
+package com.phylosoft.spark.learning.sql.streaming
 
 package object source {
 
