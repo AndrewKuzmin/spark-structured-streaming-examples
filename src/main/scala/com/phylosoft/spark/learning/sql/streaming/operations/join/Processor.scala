@@ -2,7 +2,7 @@ package com.phylosoft.spark.learning.sql.streaming.operations.join
 
 import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
 import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
-import com.phylosoft.spark.learning.sql.streaming.source.rate.RateSources
+import com.phylosoft.spark.learning.sql.streaming.source.rate.AdRateSources
 import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.streaming.{OutputMode, StreamingQuery, Trigger}
@@ -17,7 +17,7 @@ abstract class Processor(appName: String)
 
   def start(): Unit = {
 
-    val sources = new RateSources(spark)
+    val sources = new AdRateSources(spark)
 
     val impressions = sources.loadImpressions()
 

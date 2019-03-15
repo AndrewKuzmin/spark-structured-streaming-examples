@@ -4,7 +4,7 @@ import com.phylosoft.spark.learning.sql.streaming.domain.Model.{Event, SessionIn
 import com.phylosoft.spark.learning.sql.streaming.monitoring.Monitoring
 import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
 import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
-import com.phylosoft.spark.learning.sql.streaming.source.rate.RateSources
+import com.phylosoft.spark.learning.sql.streaming.source.rate.UserActionsRateSource
 import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.streaming.{GroupStateTimeout, StreamingQuery, Trigger}
@@ -20,9 +20,9 @@ object MapGroupsWithStateApp
 
   spark.streams.addListener(simpleListener)
 
-  val sources = new RateSources(spark)
+  val source = new UserActionsRateSource(spark)
 
-  val userActions = sources.loadUserActions()
+  val userActions = source.loadUserActions()
   userActions.printSchema()
 
   import spark.implicits._
