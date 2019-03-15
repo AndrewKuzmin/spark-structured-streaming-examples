@@ -62,7 +62,7 @@ object MapGroupsWithStateApp
 
   private def startStreamingSink[T <: StreamingSink](data: DataFrame, sink: T) : StreamingQuery = {
     import scala.concurrent.duration._
-    sink.start(data = data, trigger = Trigger.ProcessingTime(2.seconds))
+    sink.writeStream(data = data, trigger = Trigger.ProcessingTime(2.seconds))
   }
 
 }

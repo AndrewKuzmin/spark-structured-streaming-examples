@@ -32,7 +32,7 @@ abstract class Processor(appName: String)
 
   private def startStreamingSink[T <: StreamingSink](data: DataFrame, sink: T): StreamingQuery = {
     import scala.concurrent.duration._
-    sink.start(data = data, trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
+    sink.writeStream(data = data, trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
   }
 
   import com.phylosoft.spark.learning.AppConfig._

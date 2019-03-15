@@ -6,7 +6,7 @@ import org.apache.spark.sql.{DataFrame, SparkSession}
 
 trait RateSource extends StreamingSource {
 
-  override def load(spark: SparkSession): DataFrame = {
+  override def readStream(spark: SparkSession): DataFrame = {
 
     spark.readStream
       .format("rate")
