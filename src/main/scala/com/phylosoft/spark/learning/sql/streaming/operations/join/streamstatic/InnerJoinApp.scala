@@ -1,9 +1,8 @@
 package com.phylosoft.spark.learning.sql.streaming.operations.join.streamstatic
 
-import com.phylosoft.spark.learning.AppConfig.TRIGGER_POLICY
-import com.phylosoft.spark.learning.AppConfig.TRIGGER_POLICY.TRIGGER_POLICY
 import com.phylosoft.spark.learning.sql.streaming.operations.join.Processor
 import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.streaming.Trigger
 
 object InnerJoinApp {
 
@@ -11,11 +10,13 @@ object InnerJoinApp {
 
     val processor = new Processor("InnerJoinApp") {
 
+      import scala.concurrent.duration._
+
       override def join(impressions: DataFrame, clicks: DataFrame): DataFrame = {
         impressions.join(clicks, "adId")
       }
 
-      override def getTriggerPolicy: TRIGGER_POLICY = TRIGGER_POLICY.PROCESSING_TIME
+      override def getTriggerPolicy: Trigger = Trigger.ProcessingTime(2.seconds)
 
     }
 

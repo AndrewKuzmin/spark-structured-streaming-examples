@@ -26,19 +26,28 @@ abstract class Processor(appName: String)
     val events = join(impressions, clicks)
 
     val query = startStreamingSink(events, new ConsoleSink())
+
     query.awaitTermination()
 
   }
 
   private def startStreamingSink[T <: StreamingSink](data: DataFrame, sink: T): StreamingQuery = {
-    import scala.concurrent.duration._
-    sink.writeStream(data = data, trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
+    sink.writeStream(data = data, trigger = getTriggerPolicy, outputMode = OutputMode.Append())
   }
 
-  import com.phylosoft.spark.learning.AppConfig._
-
-  def getTriggerPolicy: TRIGGER_POLICY.TRIGGER_POLICY = TRIGGER_POLICY.PROCESSING_TIME
-
   def join(impressions: DataFrame, clicks: DataFrame): DataFrame
+
+  // Default trigger (runs micro-batch as soon as it can)
+  // Trigger.ProcessingTime(0L)
+  //
+  // ProcessingTime trigger with two-seconds micro-batch interval
+  // Trigger.ProcessingTime(2.seconds)
+  //
+  // One-time trigger
+  // Trigger.Once()
+  //
+  // Continuous trigger with one-second checkpointing interval
+  // Trigger.Continuous("1 second")
+  def getTriggerPolicy: Trigger = Trigger.Once()
 
 }

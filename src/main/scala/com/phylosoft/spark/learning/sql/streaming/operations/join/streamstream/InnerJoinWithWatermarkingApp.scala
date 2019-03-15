@@ -2,6 +2,7 @@ package com.phylosoft.spark.learning.sql.streaming.operations.join.streamstream
 
 import com.phylosoft.spark.learning.sql.streaming.operations.join.Processor
 import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.streaming.Trigger
 
 /**
   * Inner Join with Watermarking
@@ -9,6 +10,8 @@ import org.apache.spark.sql.DataFrame
 object InnerJoinWithWatermarkingApp {
 
   def main(args: Array[String]): Unit = {
+
+    import scala.concurrent.duration._
 
     val processor = new Processor("InnerJoinWithWatermarkingApp") {
 
@@ -37,6 +40,8 @@ object InnerJoinWithWatermarkingApp {
         )
 
       }
+
+      override def getTriggerPolicy: Trigger = Trigger.ProcessingTime(2.seconds)
 
     }
     processor.start()

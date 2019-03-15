@@ -2,10 +2,13 @@ package com.phylosoft.spark.learning.sql.streaming.operations.join.streamstream
 
 import com.phylosoft.spark.learning.sql.streaming.operations.join.Processor
 import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.streaming.Trigger
 
 object OuterJoinWithWatermarkingApp {
 
   def main(args: Array[String]): Unit = {
+
+    import scala.concurrent.duration._
 
     val processor = new Processor("OuterJoinWithWatermarkingApp") {
 
@@ -36,6 +39,8 @@ object OuterJoinWithWatermarkingApp {
         )
 
       }
+
+      override def getTriggerPolicy: Trigger = Trigger.ProcessingTime(2.seconds)
 
     }
     processor.start()
