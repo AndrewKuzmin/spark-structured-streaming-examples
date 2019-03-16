@@ -1,6 +1,24 @@
 # Spark Structured Streaming Examples
 Spark structured streaming examples with using of version 2.4.0
 
+# Support matrix for joins in streaming queries
+
+| Left Input | Right Input  | Join Type   |  |
+| ---------- | ------------ | ----------- |  |
+| Static     | Static       | All types   | TBD |
+|            |              | Inner       | TBD |
+|            |              | Left Outer  | TBD |
+| Stream     | Static       | Right Outer | Not supported |
+|            |              | Full Outer  | Not supported |
+|            |              | Inner       | TBD |
+|            |              | Left Outer  | Not supported |
+| Static     | Stream       | Right Outer | TBD |
+|            |              | Full Outer  | Not supported |
+|            |              | Inner       | TBD |
+|            |              | Left Outer  | TBD |
+| Stream     | Stream       | Right Outer | TBD |
+|            |              | Full Outer  | Not supported |
+
 # Use cases of processing modes (Triggers modes)
 1) Default;
 2) Fixed interval micro-batches;
