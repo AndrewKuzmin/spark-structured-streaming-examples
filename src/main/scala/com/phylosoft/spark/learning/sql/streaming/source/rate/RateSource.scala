@@ -4,17 +4,20 @@ import com.phylosoft.spark.learning.sql.streaming.source.StreamingSource
 import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
-trait RateSource extends StreamingSource {
+trait RateSource
+  extends StreamingSource {
 
-  override def readStream(spark: SparkSession): DataFrame = {
+  val spark: SparkSession
+  val rowsPerSecond: String
+  val numPartitions: String
 
+  override def readStream(): DataFrame = {
     spark.readStream
       .format("rate")
-      .option("rowsPerSecond", "5")
-      .option("numPartitions", "1")
+      .option("rowsPerSecond", rowsPerSecond)
+      .option("numPartitions", numPartitions)
       .load()
       .select(col("*"))
-
   }
 
 }

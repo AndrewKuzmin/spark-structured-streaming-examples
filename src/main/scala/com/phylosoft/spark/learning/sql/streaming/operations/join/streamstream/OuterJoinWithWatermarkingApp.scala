@@ -3,16 +3,19 @@ package com.phylosoft.spark.learning.sql.streaming.operations.join.streamstream
 import com.phylosoft.spark.learning.sql.streaming.operations.join.Processor
 import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
 import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
-import org.apache.spark.sql.DataFrame
+import com.phylosoft.spark.learning.sql.streaming.source.rate.AdRateSources
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
+import org.apache.spark.sql.{DataFrame, SparkSession}
 
 object OuterJoinWithWatermarkingApp {
 
   def main(args: Array[String]): Unit = {
 
-    import scala.concurrent.duration._
-
     val processor = new Processor("OuterJoinWithWatermarkingApp") {
+
+      override def createStreamingSources(spark: SparkSession): AdRateSources =
+        new AdRateSources(spark, rowsPerSecond = "10")
+
 
       override def join(impressions: DataFrame, clicks: DataFrame): DataFrame = {
 
@@ -42,7 +45,8 @@ object OuterJoinWithWatermarkingApp {
 
       }
 
-      override def initStreamingSink: StreamingSink = {
+      override def createStreamingSink: StreamingSink = {
+        import scala.concurrent.duration._
         new ConsoleSink(trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
       }
 

@@ -3,8 +3,8 @@ package com.phylosoft.spark.learning.sql.streaming.operations.join
 import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
 import com.phylosoft.spark.learning.sql.streaming.source.rate.AdRateSources
 import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
-import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.streaming.StreamingQuery
+import org.apache.spark.sql.{DataFrame, SparkSession}
 
 abstract class Processor(appName: String)
   extends SparkSessionConfiguration
@@ -16,26 +16,26 @@ abstract class Processor(appName: String)
 
   def start(): Unit = {
 
-    val sources = new AdRateSources(spark)
-
+    val sources = createStreamingSources(spark)
     val impressions = sources.loadImpressions()
-
     val clicks = sources.loadClicks()
 
     val events = join(impressions, clicks)
 
-    val query = startStreamingSink(events, initStreamingSink)
+    val query = startStreamingSink(events, createStreamingSink)
 
     query.awaitTermination()
 
   }
 
+  def createStreamingSources(spark: SparkSession): AdRateSources = new AdRateSources(spark)
+
   private def startStreamingSink[T <: StreamingSink](data: DataFrame, sink: T): StreamingQuery = {
     sink.writeStream(data)
   }
 
-  def join(impressions: DataFrame, clicks: DataFrame): DataFrame
+  def createStreamingSink: StreamingSink
 
-  def initStreamingSink: StreamingSink
+  def join(impressions: DataFrame, clicks: DataFrame): DataFrame
 
 }
