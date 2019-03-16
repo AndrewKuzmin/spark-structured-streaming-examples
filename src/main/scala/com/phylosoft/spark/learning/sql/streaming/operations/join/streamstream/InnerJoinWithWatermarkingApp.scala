@@ -1,8 +1,10 @@
 package com.phylosoft.spark.learning.sql.streaming.operations.join.streamstream
 
 import com.phylosoft.spark.learning.sql.streaming.operations.join.Processor
+import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
+import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.streaming.Trigger
+import org.apache.spark.sql.streaming.{OutputMode, Trigger}
 
 /**
   * Inner Join with Watermarking
@@ -41,9 +43,12 @@ object InnerJoinWithWatermarkingApp {
 
       }
 
-      override def getTriggerPolicy: Trigger = Trigger.ProcessingTime(2.seconds)
+      override def initStreamingSink: StreamingSink = {
+        new ConsoleSink(trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
+      }
 
     }
+
     processor.start()
 
   }

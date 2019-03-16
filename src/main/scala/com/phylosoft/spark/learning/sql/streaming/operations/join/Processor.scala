@@ -1,11 +1,10 @@
 package com.phylosoft.spark.learning.sql.streaming.operations.join
 
 import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
-import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
 import com.phylosoft.spark.learning.sql.streaming.source.rate.AdRateSources
 import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.streaming.{OutputMode, StreamingQuery, Trigger}
+import org.apache.spark.sql.streaming.StreamingQuery
 
 abstract class Processor(appName: String)
   extends SparkSessionConfiguration
@@ -25,29 +24,18 @@ abstract class Processor(appName: String)
 
     val events = join(impressions, clicks)
 
-    val query = startStreamingSink(events, new ConsoleSink())
+    val query = startStreamingSink(events, initStreamingSink)
 
     query.awaitTermination()
 
   }
 
   private def startStreamingSink[T <: StreamingSink](data: DataFrame, sink: T): StreamingQuery = {
-    sink.writeStream(data = data, trigger = getTriggerPolicy, outputMode = OutputMode.Append())
+    sink.writeStream(data)
   }
 
   def join(impressions: DataFrame, clicks: DataFrame): DataFrame
 
-  // Default trigger (runs micro-batch as soon as it can)
-  // Trigger.ProcessingTime(0L)
-  //
-  // ProcessingTime trigger with two-seconds micro-batch interval
-  // Trigger.ProcessingTime(2.seconds)
-  //
-  // One-time trigger
-  // Trigger.Once()
-  //
-  // Continuous trigger with one-second checkpointing interval
-  // Trigger.Continuous("1 second")
-  def getTriggerPolicy: Trigger = Trigger.Once()
+  def initStreamingSink: StreamingSink
 
 }

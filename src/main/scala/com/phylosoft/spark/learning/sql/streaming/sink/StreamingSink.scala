@@ -1,12 +1,10 @@
 package com.phylosoft.spark.learning.sql.streaming.sink
 
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.streaming.{OutputMode, StreamingQuery, Trigger}
+import org.apache.spark.sql.streaming.StreamingQuery
 
 trait StreamingSink {
 
-  def writeStream(data: DataFrame,
-                  trigger: Trigger = Trigger.Once(),
-                  outputMode: OutputMode = OutputMode.Update()): StreamingQuery
+  def writeStream(data: DataFrame): StreamingQuery
 
 }

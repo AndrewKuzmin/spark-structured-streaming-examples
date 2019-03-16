@@ -7,7 +7,7 @@ import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
 import com.phylosoft.spark.learning.sql.streaming.source.rate.UserActionsRateSource
 import com.phylosoft.spark.learning.{Logger, SparkSessionConfiguration}
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.streaming.{GroupStateTimeout, StreamingQuery, Trigger}
+import org.apache.spark.sql.streaming.{GroupStateTimeout, OutputMode, StreamingQuery, Trigger}
 
 object MapGroupsWithStateApp
   extends App
@@ -57,12 +57,17 @@ object MapGroupsWithStateApp
   sessions.printSchema()
 
   // Start running the query that prints the session updates to the console
-  val query = startStreamingSink(sessions, new ConsoleSink())
+  val query = startStreamingSink(sessions, initStreamingSink)
+
   query.awaitTermination()
 
   private def startStreamingSink[T <: StreamingSink](data: DataFrame, sink: T) : StreamingQuery = {
+    sink.writeStream(data)
+  }
+
+  private def initStreamingSink: StreamingSink = {
     import scala.concurrent.duration._
-    sink.writeStream(data = data, trigger = Trigger.ProcessingTime(2.seconds))
+    new ConsoleSink(trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
   }
 
 }
