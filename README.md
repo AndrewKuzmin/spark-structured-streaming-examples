@@ -3,20 +3,20 @@ Spark structured streaming examples with using of version 2.4.0
 
 # Support matrix for joins in streaming queries
 
-| Left Input | Right Input  | Join Type   |  |
-| ---------- | ------------ | ----------- |  |
+| Left Input | Right Input  | Join Type   |               |
+| ---------- | ------------ | ----------- | ------------- |
 | Static     | Static       | All types   | TBD |
-|            |              | Inner       | TBD |
+| Stream     | Static       | Inner       | TBD |
 |            |              | Left Outer  | TBD |
-| Stream     | Static       | Right Outer | Not supported |
+|            |              | Right Outer | Not supported |
 |            |              | Full Outer  | Not supported |
-|            |              | Inner       | TBD |
+| Static     | Stream       | Inner       | TBD |
 |            |              | Left Outer  | Not supported |
-| Static     | Stream       | Right Outer | TBD |
+|            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
-|            |              | Inner       | TBD |
+| Stream     | Stream       | Inner       | TBD |
 |            |              | Left Outer  | TBD |
-| Stream     | Stream       | Right Outer | TBD |
+|            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
 
 # Use cases of processing modes (Triggers modes)
