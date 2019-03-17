@@ -2,7 +2,6 @@
 Spark structured streaming examples with using of version 2.4.0
 
 # Support matrix for joins in streaming queries
-** Base package: com.phylosoft.spark.learning.sql.streaming.operations.join
 
 | Left Input | Right Input  | Join Type   | Implementation |
 | ---------- | ------------ | ----------- | -------------- |
@@ -15,10 +14,12 @@ Spark structured streaming examples with using of version 2.4.0
 |            |              | Left Outer  | Not supported |
 |            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
-| Stream     | Stream       | Inner       | ..streamstream.InnerJoinApp, ..streamstream.InnerJoinWithWatermarkingApp |
-|            |              | Left Outer  | ..streamstream.LeftOuterJoinWithWatermarkingApp |
+| Stream     | Stream       | Inner       | ..streamstream.InnerJoinApp*, ..streamstream.InnerJoinWithWatermarkingApp* |
+|            |              | Left Outer  | ..streamstream.LeftOuterJoinWithWatermarkingApp* |
 |            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
+
+** Base package: com.phylosoft.spark.learning.sql.streaming.operations.join
 
 # Use cases of processing modes (Triggers modes)
 1) Default;
