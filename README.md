@@ -19,7 +19,7 @@ Spark structured streaming examples with using of version 2.4.0
 |            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
 
-**Base package: com.phylosoft.spark.learning.sql.streaming.operations.join
+**Base package: com.phylosoft.spark.learning.sql.streaming.operations.join*
 
 # Use cases of processing modes (Triggers modes)
 1) Default;
