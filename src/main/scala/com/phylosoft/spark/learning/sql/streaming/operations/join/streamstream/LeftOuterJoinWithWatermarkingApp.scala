@@ -7,7 +7,7 @@ import com.phylosoft.spark.learning.sql.streaming.source.rate.AdRateSources
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
-object OuterJoinWithWatermarkingApp {
+object LeftOuterJoinWithWatermarkingApp {
 
   def main(args: Array[String]): Unit = {
 

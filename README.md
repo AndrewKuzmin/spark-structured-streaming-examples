@@ -14,10 +14,11 @@ Spark structured streaming examples with using of version 2.4.0
 |            |              | Left Outer  | Not supported |
 |            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
-| Stream     | Stream       | Inner       | com.phylosoft.spark.learning.sql.streaming.operations.join.streamstream.* |
-|            |              | Left Outer  | TBD |
+| Stream     | Stream       | Inner       | ..streamstream.InnerJoinApp, ..streamstream.InnerJoinWithWatermarkingApp |
+|            |              | Left Outer  | ..streamstream.LeftOuterJoinWithWatermarkingApp |
 |            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
+** Base package: com.phylosoft.spark.learning.sql.streaming.operations.join
 
 # Use cases of processing modes (Triggers modes)
 1) Default;
