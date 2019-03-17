@@ -3,8 +3,8 @@ Spark structured streaming examples with using of version 2.4.0
 
 # Support matrix for joins in streaming queries
 
-| Left Input | Right Input  | Join Type   |               |
-| ---------- | ------------ | ----------- | ------------- |
+| Left Input | Right Input  | Join Type   | Implementation |
+| ---------- | ------------ | ----------- | -------------- |
 | Static     | Static       | All types   | TBD |
 | Stream     | Static       | Inner       | TBD |
 |            |              | Left Outer  | TBD |
@@ -14,7 +14,7 @@ Spark structured streaming examples with using of version 2.4.0
 |            |              | Left Outer  | Not supported |
 |            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
-| Stream     | Stream       | Inner       | TBD |
+| Stream     | Stream       | Inner       | com.phylosoft.spark.learning.sql.streaming.operations.join.streamstream.* |
 |            |              | Left Outer  | TBD |
 |            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
@@ -35,8 +35,9 @@ Spark structured streaming examples with using of version 2.4.0
 2) KeyValueGroupedDataset.flatMapGroupsWithState;
 
 # Links
-1) [Stream-Stream Joins using Structured Streaming (Scala)](https://docs.databricks.com/spark/latest/structured-streaming/examples.html#stream-stream-joins-scala);
-2) [Easy, Scalable, Fault-Tolerant Stream Processing with Structured Streaming in Apache Spark](https://databricks.com/session/easy-scalable-fault-tolerant-stream-processing-with-structured-streaming-in-apache-spark);
-3) [Easy, Scalable, Fault-Tolerant Stream Processing with Structured Streaming in Apache Spark - continues](https://databricks.com/session/easy-scalable-fault-tolerant-stream-processing-with-structured-streaming-in-apache-spark-continues);
-4) [Deep Dive into Stateful Stream Processing in Structured Streaming](https://databricks.com/session/deep-dive-into-stateful-stream-processing-in-structured-streaming);
-5) [Monitoring Structured Streaming Applications Using Web UI](https://databricks.com/session/monitoring-structured-streaming-applications-using-web-ui);
+1) [Structured Streaming Programming Guide](http://spark.apache.org/docs/latest/structured-streaming-programming-guide.html);
+2) [Stream-Stream Joins using Structured Streaming (Scala)](https://docs.databricks.com/spark/latest/structured-streaming/examples.html#stream-stream-joins-scala);
+3) [Easy, Scalable, Fault-Tolerant Stream Processing with Structured Streaming in Apache Spark](https://databricks.com/session/easy-scalable-fault-tolerant-stream-processing-with-structured-streaming-in-apache-spark);
+4) [Easy, Scalable, Fault-Tolerant Stream Processing with Structured Streaming in Apache Spark - continues](https://databricks.com/session/easy-scalable-fault-tolerant-stream-processing-with-structured-streaming-in-apache-spark-continues);
+5) [Deep Dive into Stateful Stream Processing in Structured Streaming](https://databricks.com/session/deep-dive-into-stateful-stream-processing-in-structured-streaming);
+6) [Monitoring Structured Streaming Applications Using Web UI](https://databricks.com/session/monitoring-structured-streaming-applications-using-web-ui);
