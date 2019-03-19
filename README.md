@@ -3,7 +3,7 @@ Spark structured streaming examples with using of version 2.4.0
 
 # Support matrix for joins in streaming queries
 
-| Left Input | Right Input  | Join Type   | Implementation |
+| Left Input | Right Input  | Join Type   | Example |
 | ---------- | ------------ | ----------- | -------------- |
 | Static     | Static       | All types   | TBD |
 | Stream     | Static       | Inner       | TBD |
@@ -43,3 +43,4 @@ Spark structured streaming examples with using of version 2.4.0
 4) [Easy, Scalable, Fault-Tolerant Stream Processing with Structured Streaming in Apache Spark - continues](https://databricks.com/session/easy-scalable-fault-tolerant-stream-processing-with-structured-streaming-in-apache-spark-continues);
 5) [Deep Dive into Stateful Stream Processing in Structured Streaming](https://databricks.com/session/deep-dive-into-stateful-stream-processing-in-structured-streaming);
 6) [Monitoring Structured Streaming Applications Using Web UI](https://databricks.com/session/monitoring-structured-streaming-applications-using-web-ui);
+7) [The Internals of Spark Structured Streaming](https://jaceklaskowski.gitbooks.io/spark-structured-streaming/);
