@@ -17,6 +17,8 @@ val sparkAndDependencies = Seq(
 libraryDependencies ++= sparkAndDependencies
 //  .map(_ % "provided")
 
+libraryDependencies += "io.delta" %% "delta-core" % "0.2.0"
+
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.0.5",
   "com.typesafe" % "config" % "1.3.3",

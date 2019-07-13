@@ -3,6 +3,7 @@ package com.phylosoft.spark.learning.sql.streaming.operations.join.streamstream
 import com.phylosoft.spark.learning.sql.streaming.operations.join.Processor
 import com.phylosoft.spark.learning.sql.streaming.sink.StreamingSink
 import com.phylosoft.spark.learning.sql.streaming.sink.console.ConsoleSink
+import com.phylosoft.spark.learning.sql.streaming.sink.delta.DeltaSink
 import com.phylosoft.spark.learning.sql.streaming.source.rate.AdRateSources
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
 import org.apache.spark.sql.{DataFrame, SparkSession}
@@ -25,7 +26,8 @@ object InnerJoinApp {
 
       override def createStreamingSink: StreamingSink = {
         import scala.concurrent.duration._
-        new ConsoleSink(trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
+//        new ConsoleSink(trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
+        new DeltaSink(trigger = Trigger.ProcessingTime(5.seconds), outputMode = OutputMode.Append())
       }
 
     }
