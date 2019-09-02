@@ -3,7 +3,7 @@ name := "SparkStructuredStreamingExamples"
 version := "0.1.0-SNAPSHOT"
 
 scalaVersion := "2.12.7"
-val sparkVersion = "2.4.3"
+val sparkVersion = "2.4.4"
 val slf4jVersion = "1.7.16"
 val log4jVersion = "1.2.17"
 
