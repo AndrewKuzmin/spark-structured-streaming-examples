@@ -1,5 +1,5 @@
 # Spark Structured Streaming Examples
-Spark structured streaming examples with using of version 2.4.4
+Spark structured streaming examples with using of version 3.0.0
 
 # Support matrix for joins in streaming queries
 

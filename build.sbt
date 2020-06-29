@@ -2,8 +2,8 @@ name := "SparkStructuredStreamingExamples"
 
 version := "0.1.0-SNAPSHOT"
 
-scalaVersion := "2.12.7"
-val sparkVersion = "2.4.4"
+scalaVersion := "2.12.11"
+val sparkVersion = "3.0.0"
 val slf4jVersion = "1.7.16"
 val log4jVersion = "1.2.17"
 
@@ -17,7 +17,7 @@ val sparkAndDependencies = Seq(
 libraryDependencies ++= sparkAndDependencies
 //  .map(_ % "provided")
 
-libraryDependencies += "io.delta" %% "delta-core" % "0.3.0"
+libraryDependencies += "io.delta" %% "delta-core" % "0.7.0"
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.0.5",
