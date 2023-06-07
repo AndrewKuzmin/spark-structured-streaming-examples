@@ -26,8 +26,8 @@ object InnerJoinApp {
 
       override def createStreamingSink: StreamingSink = {
         import scala.concurrent.duration._
-//        new ConsoleSink(trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
-        new DeltaSink(trigger = Trigger.ProcessingTime(5.seconds), outputMode = OutputMode.Append())
+        new ConsoleSink(trigger = Trigger.ProcessingTime(2.seconds), outputMode = OutputMode.Append())
+//        new DeltaSink(trigger = Trigger.ProcessingTime(5.seconds), outputMode = OutputMode.Append())
       }
 
     }

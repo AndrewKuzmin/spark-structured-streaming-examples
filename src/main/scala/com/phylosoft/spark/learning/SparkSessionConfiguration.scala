@@ -7,7 +7,7 @@ import org.apache.spark.sql.SparkSession
 
 trait SparkSessionConfiguration {
 
-  val settings: Traversable[(String, String)]
+  val settings: Iterable[(String, String)]
 
   private val warehouseLocation = "file:///" + new File("spark-warehouse").getAbsolutePath.toString
 
