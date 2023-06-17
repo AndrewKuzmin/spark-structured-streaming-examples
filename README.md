@@ -1,5 +1,5 @@
 # Spark Structured Streaming Examples
-Spark structured streaming examples with using of version 3.0.0
+Spark structured streaming examples with using of version 3.4.0
 
 # Support matrix for joins in streaming queries
 
@@ -10,22 +10,25 @@ Spark structured streaming examples with using of version 3.0.0
 |            |              | Left Outer  | TBD |
 |            |              | Right Outer | Not supported |
 |            |              | Full Outer  | Not supported |
+|            |              | Left Semi  | TBD |
 | Static     | Stream       | Inner       | TBD |
 |            |              | Left Outer  | Not supported |
 |            |              | Right Outer | TBD |
 |            |              | Full Outer  | Not supported |
+|            |              | Left Semi  | Not supported |
 | Stream     | Stream       | Inner       | ..streamstream.InnerJoinApp*, ..streamstream.InnerJoinWithWatermarkingApp* |
 |            |              | Left Outer  | ..streamstream.LeftOuterJoinWithWatermarkingApp* |
 |            |              | Right Outer | TBD |
-|            |              | Full Outer  | Not supported |
-
+|            |              | Full Outer  | TBD |
+|            |              | Left Semi  | TBD |
 **Base package: com.phylosoft.spark.learning.sql.streaming.operations.join*
 
 # Use cases of processing modes (Triggers modes)
-1) Default;
+1) Unspecified (default);
 2) Fixed interval micro-batches;
-3) One-time micro-batch;
-2) Continuous with fixed checkpoint interval;
+3) One-time micro-batch (deprecated);
+4) Available-now micro-batch;
+5) Continuous with fixed checkpoint interval (experimental);
 
 # Optimizations
 1) Tungsten execution engine;
